@@ -1,8 +1,9 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/prefix-dev/recipe-format/main/schema.json
 schema_version: 1
 
 context:
   name: azure-synapse-nspkg
-  version: 1.0.0
+  version: "1.0.0"
 
 package:
   name: ${{ name|lower }}
@@ -23,13 +24,14 @@ requirements:
     - pip
     - setuptools
   run:
-    - python >=${{ python_min }}
+    - python >=${{ python_min }},<4.0
     - azure-nspkg >=2.0.0
 
 tests:
   - python:
       imports:
         - azure.synapse
+      pip_check: true
       python_version: ${{ python_min }}.*
   - requirements:
       run:
