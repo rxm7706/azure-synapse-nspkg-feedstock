@@ -1,0 +1,49 @@
+schema_version: 1
+
+context:
+  name: azure-synapse-nspkg
+  version: 1.0.0
+
+package:
+  name: ${{ name|lower }}
+  version: ${{ version }}
+
+source:
+  url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/azure-synapse-nspkg-${{ version }}.zip
+  sha256: 161879ace78b529826094fd9d5e2392e713497e5e2ce5c4372e1e2d0c48ef56d
+
+build:
+  number: 2
+  noarch: python
+  script: ${{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - python ${{ python_min }}.*
+    - pip
+    - setuptools
+  run:
+    - python >=${{ python_min }}
+    - azure-nspkg >=2.0.0
+
+tests:
+  - python:
+      imports:
+        - azure.synapse
+      python_version: ${{ python_min }}.*
+  - requirements:
+      run:
+        - pip
+        - python ${{ python_min }}.*
+    script:
+      - pip check
+
+about:
+  summary: Microsoft Azure Synapse Namespace Package
+  license: Apache-2.0
+  license_file: LICENSE.txt
+  homepage: https://github.com/Azure/azure-sdk-for-python/
+
+extra:
+  recipe-maintainers:
+    - rxm7706
